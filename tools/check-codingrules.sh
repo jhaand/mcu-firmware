@@ -34,7 +34,7 @@ BAD_FILES=""
 echo "Scan .c files ----"
 C_FILES=$(find . -name '*.c')
 for FILE in $C_FILES; do
-    uncrustify -c "$DIR/codingrules-uncrustify-riot.cfg" --check $FILE
+    uncrustify -c "$DIR/codingrules-uncrustify-riot.cfg" -q -l C --check $FILE > /dev/null
     if [ $? -eq 1 ]; then
         BAD_FILES+="${FILE}"$'\n'
     fi
@@ -44,7 +44,7 @@ done
 echo "Scan .h files ----"
 H_FILES=$(find . -name '*.h')
 for FILE in $H_FILES; do
-    uncrustify -c "$DIR/codingrules-uncrustify-riot.cfg" -l C --check $FILE
+    uncrustify -c "$DIR/codingrules-uncrustify-riot.cfg" -q -l C --check $FILE > /dev/null
     if [ $? -eq 1 ]; then
         BAD_FILES+="${FILE}"$'\n'
     fi
