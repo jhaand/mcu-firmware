@@ -43,8 +43,8 @@ typedef uint16_t vl53l0x_t;
  * @brief   VL53L0X ToF sensor configuration
  */
 typedef struct {
-    i2c_t       i2c_dev;    /**< I2C bus */
-    uint16_t    i2c_addr;   /**< I2C ToF address */
+    i2c_t i2c_dev;          /**< I2C bus */
+    uint16_t i2c_addr;      /**< I2C ToF address */
 } vl53l0x_conf_t;
 
 

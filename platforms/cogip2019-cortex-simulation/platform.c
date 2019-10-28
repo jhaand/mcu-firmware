@@ -36,60 +36,46 @@ int pf_read_sensors(void)
 }
 
 void pf_front_cup_take(void)
-{
-}
+{}
 
 void pf_front_cup_hold(void)
-{
-}
+{}
 
 void pf_front_cup_ramp(void)
-{
-}
+{}
 
 void pf_back_cup_take(void)
-{
-}
+{}
 
 void pf_back_cup_hold(void)
-{
-}
+{}
 
 void pf_back_cup_ramp(void)
-{
-}
+{}
 
 void pf_front_ramp_right_drop(void)
-{
-}
+{}
 
 void pf_front_ramp_reset(void)
-{
-}
+{}
 
 void pf_back_ramp_left_drop(void)
-{
-}
+{}
 
 void pf_back_ramp_reset(void)
-{
-}
+{}
 
 void pf_back_ramp_left_horiz_for_goldenium(void)
-{
-}
+{}
 
 void pf_arms_open(void)
-{
-}
+{}
 
 void pf_arms_close(void)
-{
-}
+{}
 
 void pf_stop_pumps(void)
-{
-}
+{}
 
 void pf_goldenium_hold(void)
 {}

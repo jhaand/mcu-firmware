@@ -51,29 +51,29 @@ extern "C" {
  */
 static const motor_driver_config_t motor_driver_config[] = {
     {
-        .mode = MOTOR_DRIVER_1_DIR,
-        .pwm_dev = 0,
-        .pwm_frequency = 20000U,
+        .mode           = MOTOR_DRIVER_1_DIR,
+        .pwm_dev        = 0,
+        .pwm_frequency  = 20000U,
         .pwm_resolution = 1500U,
-        .nb_motors = 2,
-        .motors = {
+        .nb_motors      = 2,
+        .motors         = {
             {
-                .pwm_channel = 0,
-                .gpio_enable = GPIO_UNDEF,
-                .gpio_dir0 = GPIO_PIN(PORT_A, 4),
+                .pwm_channel        = 0,
+                .gpio_enable        = GPIO_UNDEF,
+                .gpio_dir0          = GPIO_PIN(PORT_A, 4),
                 .gpio_dir1_or_brake = GPIO_UNDEF,
-                .gpio_dir_reverse = 0,
+                .gpio_dir_reverse   = 0,
                 .gpio_enable_invert = 0,
-                .gpio_brake_invert = 0,
+                .gpio_brake_invert  = 0,
             },
             {
-                .pwm_channel = 1,
-                .gpio_enable = GPIO_UNDEF,
-                .gpio_dir0 = GPIO_PIN(PORT_B, 8),
+                .pwm_channel        = 1,
+                .gpio_enable        = GPIO_UNDEF,
+                .gpio_dir0          = GPIO_PIN(PORT_B, 8),
                 .gpio_dir1_or_brake = GPIO_UNDEF,
-                .gpio_dir_reverse = 1,
+                .gpio_dir_reverse   = 1,
                 .gpio_enable_invert = 0,
-                .gpio_brake_invert = 0,
+                .gpio_brake_invert  = 0,
             },
         },
     },
@@ -83,28 +83,28 @@ static const motor_driver_config_t motor_driver_config[] = {
 
 static const vl53l0x_conf_t vl53l0x_config[] = {
     {
-        .i2c_dev    = 1,
-        .i2c_addr   = 0x29,
+        .i2c_dev  = 1,
+        .i2c_addr = 0x29,
     },
     {
-        .i2c_dev    = 1,
-        .i2c_addr   = 0x29,
+        .i2c_dev  = 1,
+        .i2c_addr = 0x29,
     },
     {
-        .i2c_dev    = 1,
-        .i2c_addr   = 0x29,
+        .i2c_dev  = 1,
+        .i2c_addr = 0x29,
     },
     {
-        .i2c_dev    = 1,
-        .i2c_addr   = 0x29,
+        .i2c_dev  = 1,
+        .i2c_addr = 0x29,
     },
     {
-        .i2c_dev    = 1,
-        .i2c_addr   = 0x29,
+        .i2c_dev  = 1,
+        .i2c_addr = 0x29,
     },
     {
-        .i2c_dev    = 1,
-        .i2c_addr   = 0x29,
+        .i2c_dev  = 1,
+        .i2c_addr = 0x29,
     },
 };
 
@@ -112,9 +112,9 @@ static const vl53l0x_conf_t vl53l0x_config[] = {
 
 static const pca9548_conf_t pca9548_config[] = {
     {
-        .i2c_dev_id         = 1,
-        .i2c_address        = 0x70,
-        .channel_numof      = PCA9548_CHANNEL_MAX,
+        .i2c_dev_id    = 1,
+        .i2c_address   = 0x70,
+        .channel_numof = PCA9548_CHANNEL_MAX,
     },
 };
 

@@ -24,8 +24,8 @@
 /* Controller */
 static ctrl_quadpid_t ctrl_quadpid =
 {
-    .conf = &ctrl_quadpid_conf,
-    .pf_conf = &ctrl_pf_quadpid_conf,
+    .conf           = &ctrl_quadpid_conf,
+    .pf_conf        = &ctrl_pf_quadpid_conf,
     .quadpid_params = ctrl_quadpid_params,
 };
 
@@ -81,7 +81,7 @@ void pf_ctrl_post_stop_cb(pose_t *robot_pose, polar_t *robot_speed, polar_t *mot
 
     /* Set distance and angle command to 0 to stop the robot*/
     motor_command->distance = 0;
-    motor_command->angle = 0;
+    motor_command->angle    = 0;
 
     /* Send command to motors */
     motor_drive(motor_command);
@@ -98,12 +98,12 @@ void pf_ctrl_post_running_cb(pose_t *robot_pose, polar_t *robot_speed, polar_t *
 
 int encoder_read(polar_t *robot_speed)
 {
-    int32_t left_speed = qdec_read_and_reset(HBRIDGE_MOTOR_LEFT) * QDEC_LEFT_POLARITY;
+    int32_t left_speed  = qdec_read_and_reset(HBRIDGE_MOTOR_LEFT) * QDEC_LEFT_POLARITY;
     int32_t right_speed = qdec_read_and_reset(HBRIDGE_MOTOR_RIGHT) * QDEC_RIGHT_POLARITY;
 
     /* update speed */
     robot_speed->distance = ((right_speed + left_speed) / 2.0) / PULSE_PER_MM;
-    robot_speed->angle = (right_speed - left_speed) / PULSE_PER_DEGREE;
+    robot_speed->angle    = (right_speed - left_speed) / PULSE_PER_DEGREE;
 
     return 0;
 }
@@ -117,7 +117,7 @@ void encoder_reset(void)
 void motor_drive(polar_t *command)
 {
     int16_t right_command = (int16_t) (command->distance + command->angle);
-    int16_t left_command = (int16_t) (command->distance - command->angle);
+    int16_t left_command  = (int16_t) (command->distance - command->angle);
 
     motor_set(MOTOR_DRIVER_DEV(0), HBRIDGE_MOTOR_LEFT, left_command);
     motor_set(MOTOR_DRIVER_DEV(0), HBRIDGE_MOTOR_RIGHT, right_command);
@@ -127,11 +127,11 @@ void motor_drive(polar_t *command)
 void pf_fixed_obstacles_init(void)
 {
     polygon_t polygon;
-    uint8_t nb_vertices;
+    uint8_t   nb_vertices;
 
     /* Accelerator */
     polygon.count = 0;
-    nb_vertices = 4;
+    nb_vertices   = 4;
     if (nb_vertices < POLY_MAX_POINTS) {
         polygon.points[polygon.count++] = (pose_t){.x = -1000, .y = 0 };
         polygon.points[polygon.count++] = (pose_t){.x =  1000, .y = 0 };
@@ -142,7 +142,7 @@ void pf_fixed_obstacles_init(void)
 
     /* Balance */
     polygon.count = 0;
-    nb_vertices = 4;
+    nb_vertices   = 4;
     if (nb_vertices < POLY_MAX_POINTS) {
         polygon.points[polygon.count++] = (pose_t){.x = -1050 - ROBOT_MARGIN, .y = 1540 - ROBOT_MARGIN };
         polygon.points[polygon.count++] = (pose_t){.x =  1050 + ROBOT_MARGIN, .y = 1540 - ROBOT_MARGIN };
@@ -153,7 +153,7 @@ void pf_fixed_obstacles_init(void)
 
     /* Central stuff */
     polygon.count = 0;
-    nb_vertices = 4;
+    nb_vertices   = 4;
     if (nb_vertices < POLY_MAX_POINTS) {
         polygon.points[polygon.count++] = (pose_t){.x = -20 - ROBOT_MARGIN, .y = 1350 - ROBOT_MARGIN };
         polygon.points[polygon.count++] = (pose_t){.x =  20 + ROBOT_MARGIN, .y = 1350 - ROBOT_MARGIN };
@@ -221,7 +221,7 @@ static void emitter_loop(void)
         cc110x_strobe(dev, CC110X_SFTX);
 
         {
-            static uint8_t direction = 0;
+            static uint8_t  direction      = 0;
             static uint32_t motor_time_sec = 120 * US_PER_MS; /* 120 sec */
 
             for (uint8_t i = 2; i < FSIZE + 1; i++) {
@@ -231,8 +231,8 @@ static void emitter_loop(void)
             if (1) {
                 pkt[2] = 0x55;
                 pkt[3] = 0xaa;
-                //pkt[4] = CAMP_LEFT;
-                ////pkt[4] = CAMP_RIGHT;
+                /*pkt[4] = CAMP_LEFT; */
+                /*//pkt[4] = CAMP_RIGHT; */
                 pkt[4] = !pf_is_camp_left() ? CAMP_LEFT : CAMP_RIGHT;
 
                 /* climb time in microseconds */
@@ -280,8 +280,8 @@ static void emitter_init(void)
 
     cc110x_set_channel(dev, 0);
 
-    //cc110x_write_reg(dev, CC110X_SYNC1, 0xB5);
-    //cc110x_write_reg(dev, CC110X_SYNC0, 0x47);
+    /*cc110x_write_reg(dev, CC110X_SYNC1, 0xB5); */
+    /*cc110x_write_reg(dev, CC110X_SYNC0, 0x47); */
 
     cc110x_write_reg(dev, CC110X_ADDR, 0x04);
 
@@ -328,12 +328,12 @@ void *task_radio(void *arg)
     DEBUG("Radio thread started\n");
     emitter_init();
 
-    ///* Wait for start switch */
-    //while(!pf_is_game_launched())
-    //    ;
+    /*/ * Wait for start switch * / */
+    /*while(!pf_is_game_launched()) */
+    /*    ; */
 
     for (;;) {
-        //DEBUG("Radio thread started\n");
+        /*DEBUG("Radio thread started\n"); */
         xtimer_ticks32_t loop_start_time = xtimer_now();
         DEBUG(" -------------------- Loop radio\n");
 

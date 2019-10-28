@@ -45,8 +45,8 @@ static int trajectory_get_route_update(ctrl_t *ctrl, const pose_t *robot_pose,
                                        pose_t *pose_to_reach, polar_t *speed_order, path_t *path)
 {
     const path_pose_t *current_path_pos = path_get_current_path_pos(path);
-    static int index = 1;
-    int control_loop = 0;
+    static int         index            = 1;
+    int     control_loop                = 0;
     uint8_t need_update = 0;
 
     need_update = pf_read_sensors();
@@ -64,7 +64,7 @@ static int trajectory_get_route_update(ctrl_t *ctrl, const pose_t *robot_pose,
                 path_increment_current_pose_idx(path);
             }
             current_path_pos = path_get_current_path_pos(path);
-            need_update = 1;
+            need_update      = 1;
         }
         else if ((!allow_change_path_pose) && (ctrl_is_pose_intermediate(ctrl))) {
             need_update = 1;
@@ -81,7 +81,7 @@ static int trajectory_get_route_update(ctrl_t *ctrl, const pose_t *robot_pose,
             goto trajectory_get_route_update_error;
         path_increment_current_pose_idx(path);
         current_path_pos = path_get_current_path_pos(path);
-        need_update = 1;
+        need_update      = 1;
     }
 
     if (need_update) {
@@ -97,7 +97,7 @@ static int trajectory_get_route_update(ctrl_t *ctrl, const pose_t *robot_pose,
                 if (current_path_pos == path_get_current_path_pos(path))
                     goto trajectory_get_route_update_error;
                 current_path_pos = path_get_current_path_pos(path);
-                index = update_graph(robot_pose, &(current_path_pos->pos));
+                index            = update_graph(robot_pose, &(current_path_pos->pos));
             }
         }
         if (control_loop < 0) {
@@ -116,7 +116,7 @@ static int trajectory_get_route_update(ctrl_t *ctrl, const pose_t *robot_pose,
     else {
         /* Update speed order to max speed defined value in the new point to reach */
         speed_order->distance = path_get_current_max_speed(path);
-        speed_order->angle = speed_order->distance / 2;
+        speed_order->angle    = speed_order->distance / 2;
         ctrl_set_pose_intermediate(ctrl, TRUE);
         DEBUG("planner: Reaching intermediate position\n");
     }
@@ -130,10 +130,10 @@ trajectory_get_route_update_error:
 void *task_planner(void *arg)
 {
     (void)arg;
-    pose_t pose_order = { 0, 0, 0 };
-    pose_t initial_pose = { 0, 0, 0 };
-    polar_t speed_order = { 0, 0 };
-    const uint8_t camp_left = pf_is_camp_left();
+    pose_t             pose_order       = { 0, 0, 0 };
+    pose_t             initial_pose     = { 0, 0, 0 };
+    polar_t            speed_order      = { 0, 0 };
+    const uint8_t      camp_left        = pf_is_camp_left();
     const path_pose_t *current_path_pos = NULL;
 
     ctrl_t *ctrl = pf_get_ctrl();
@@ -154,9 +154,9 @@ void *task_planner(void *arg)
 
     /* object context initialisation */
     path->current_pose_idx = 0;
-    current_path_pos = path_get_current_path_pos(path);
-    initial_pose = current_path_pos->pos;
-    pose_order = current_path_pos->pos;
+    current_path_pos       = path_get_current_path_pos(path);
+    initial_pose           = current_path_pos->pos;
+    pose_order             = current_path_pos->pos;
     ctrl_set_pose_current(ctrl, &initial_pose);
     ctrl_set_speed_order(ctrl, &speed_order);
     ctrl_set_pose_to_reach(ctrl, &pose_order);
@@ -173,7 +173,7 @@ void *task_planner(void *arg)
 
         /* Update speed order to max speed defined value in the new point to reach */
         speed_order.distance = path_get_current_max_speed(path);
-        speed_order.angle = speed_order.distance / 2;
+        speed_order.angle    = speed_order.distance / 2;
 
         /* reverse gear selection is granted per point to reach, in path */
         ctrl_set_allow_reverse(ctrl, current_path_pos->allow_reverse);

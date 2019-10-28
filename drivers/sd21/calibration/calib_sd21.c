@@ -42,7 +42,7 @@ static int sd21_calib_servo_cmd(int argc, char **argv)
     }
 
     /* Get board and servo ids */
-    sd21_t dev = atoi(argv[1]);
+    sd21_t  dev      = atoi(argv[1]);
     uint8_t servo_id = atoi(argv[2]) - 1;
 
     /* Display usage */

@@ -88,8 +88,8 @@ odometry_by_arc(pose_t *p, const double distance, const double angle)
 
         /* robot pose */
         p->O += angle;
-        p->x = xo + r * sin(O_rad);
-        p->y = yo - r * cos(O_rad);
+        p->x  = xo + r * sin(O_rad);
+        p->y  = yo - r * cos(O_rad);
 
         limit_angle(p);
     }

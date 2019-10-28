@@ -14,12 +14,12 @@ static int nb_polygons = 0;
 static int nb_dyn_polygons = 0;
 
 /* List of visible points */
-static pose_t valid_points[MAX_POINTS];
+static pose_t  valid_points[MAX_POINTS];
 static uint8_t valid_points_count = 0;
 
 static uint64_t graph[GRAPH_MAX_VERTICES];
 
-static pose_t start_position = { .x = 0, .y = 0 };
+static pose_t start_position  = { .x = 0, .y = 0 };
 static pose_t finish_position = { .x = 0, .y = 0 };
 
 pose_t avoidance(uint8_t index)
@@ -30,7 +30,7 @@ pose_t avoidance(uint8_t index)
 
 int update_graph(const pose_t *s, const pose_t *f)
 {
-    start_position = *s;
+    start_position  = *s;
     finish_position = *f;
     int index = 1;
 
@@ -44,8 +44,8 @@ int update_graph(const pose_t *s, const pose_t *f)
             goto update_graph_error_finish_position;
         }
         if (is_point_in_polygon(&polygons[i], start_position)) {
-            // find nearest polygon point
-            double min = DIJKSTRA_MAX_DISTANCE;
+            /* find nearest polygon point */
+            double  min      = DIJKSTRA_MAX_DISTANCE;
             pose_t *pose_tmp = &start_position;
             for (int j = 0; j < polygons[i].count; j++) {
                 if (!is_point_in_polygon(&borders, polygons[i].points[j])) {
@@ -54,13 +54,13 @@ int update_graph(const pose_t *s, const pose_t *f)
 
                 double distance = distance_points(&start_position, &polygons[i].points[j]);
                 if (distance < min) {
-                    min = distance;
+                    min      = distance;
                     pose_tmp = &polygons[i].points[j];
                 }
             }
 
             start_position = *pose_tmp;
-            index = 0;
+            index          = 0;
         }
     }
 
@@ -173,7 +173,7 @@ void build_avoidance_graph(void)
                             break;
                         }
                         /* Special case of internal crossing of a polygon */
-                        int8_t index = get_point_index_in_polygon(&polygons[i], valid_points[p]);
+                        int8_t index  = get_point_index_in_polygon(&polygons[i], valid_points[p]);
                         int8_t index2 = get_point_index_in_polygon(&polygons[i], valid_points[p2]);
                         if ((index == 0) && (index2 == (polygons[i].count - 1))) {
                             continue;
@@ -197,11 +197,11 @@ void build_avoidance_graph(void)
                 /* If no collision, both points of the segment are added to the graph with distance between them */
                 if ((p < GRAPH_MAX_VERTICES) && (p2 < GRAPH_MAX_VERTICES)) {
                     if (!collide) {
-                        graph[p] |= (1 << p2);
+                        graph[p]  |= (1 << p2);
                         graph[p2] |= (1 << p);
                     }
                     else {
-                        graph[p] &= ~(1 << p2);
+                        graph[p]  &= ~(1 << p2);
                         graph[p2] &= ~(1 << p);
                     }
                 }
@@ -237,7 +237,7 @@ uint8_t is_point_on_segment(pose_t a, pose_t b, pose_t o)
 uint8_t is_segment_crossing_line(pose_t a, pose_t b, pose_t o, pose_t p)
 {
     vector_t ao, ap, ab;
-    double det = 0;
+    double   det = 0;
 
     ab.x = b.x - a.x;
     ab.y = b.y - a.y;
@@ -277,9 +277,9 @@ int8_t get_point_index_in_polygon(const polygon_t *polygons, pose_t p)
 
 uint8_t is_point_in_polygon(const polygon_t *polygon, pose_t p)
 {
-    uint8_t i;
-    double d;
-    pose_t a, b;
+    uint8_t  i;
+    double   d;
+    pose_t   a, b;
     vector_t ab, ap;
 
     for (i = 0; i < polygon->count; i++) {
@@ -303,49 +303,49 @@ uint8_t is_point_in_polygon(const polygon_t *polygon, pose_t p)
 
 pose_t dijkstra(uint16_t target, uint16_t index)
 {
-    uint8_t checked[GRAPH_MAX_VERTICES];
-    double distance[GRAPH_MAX_VERTICES];
+    uint8_t  checked[GRAPH_MAX_VERTICES];
+    double   distance[GRAPH_MAX_VERTICES];
     uint16_t v;
-    int i;
-    double weight;
-    double min_distance;
-    int parent[GRAPH_MAX_VERTICES];
-    int child[GRAPH_MAX_VERTICES];
+    int      i;
+    double   weight;
+    double   min_distance;
+    int      parent[GRAPH_MAX_VERTICES];
+    int      child[GRAPH_MAX_VERTICES];
     /* TODO: start should be a parameter. More clean even if start is always index 0 in our case */
     int start = 0;
 
     for (int i = 0; i <= valid_points_count; i++) {
-        checked[i] = FALSE;
+        checked[i]  = FALSE;
         distance[i] = DIJKSTRA_MAX_DISTANCE;
-        parent[i] = -1;
+        parent[i]   = -1;
     }
 
     distance[start] = 0;
-    v = start;
+    v               = start;
     if (graph[v] == 0) {
         goto dijkstra_error_no_destination;
     }
 
     while ((v != target) && (checked[v] == FALSE)) {
         min_distance = DIJKSTRA_MAX_DISTANCE;
-        checked[v] = TRUE;
+        checked[v]   = TRUE;
         for (i = 0; i < valid_points_count; i++) {
             if (graph[v] & (1 << i)) {
-                weight = (valid_points[v].x - valid_points[i].x);
+                weight  = (valid_points[v].x - valid_points[i].x);
                 weight *= (valid_points[v].x - valid_points[i].x);
                 weight += (valid_points[v].y - valid_points[i].y)
                           * (valid_points[v].y - valid_points[i].y);
                 weight = sqrt(weight);
                 if ((weight >= 0) && (distance[i] > (distance[v] + weight))) {
                     distance[i] = distance[v] + weight;
-                    parent[i] = v;
+                    parent[i]   = v;
                 }
             }
         }
         for (i = 1; i < valid_points_count; i++) {
             if ((checked[i] == FALSE) && (min_distance > distance[i])) {
                 min_distance = distance[i];
-                v = i;
+                v            = i;
             }
         }
     }
@@ -354,7 +354,7 @@ pose_t dijkstra(uint16_t target, uint16_t index)
     i = 1;
     while (parent[i] >= 0) {
         child[parent[i]] = i;
-        i = parent[i];
+        i                = parent[i];
     }
 
     /* Find n child in graph */

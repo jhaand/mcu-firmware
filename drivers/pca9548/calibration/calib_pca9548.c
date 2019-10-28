@@ -38,8 +38,8 @@ static int pca9548_calib_cmd(int argc, char **argv)
     }
 
     /* Get board and servo ids */
-    pca9548_t dev = atoi(argv[1]);
-    uint8_t channel_id = pca9548_get_current_channel(dev);
+    pca9548_t dev        = atoi(argv[1]);
+    uint8_t   channel_id = pca9548_get_current_channel(dev);
 
     /* Display usage */
     pca9548_calib_print_usage(dev);

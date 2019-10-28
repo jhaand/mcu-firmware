@@ -23,7 +23,7 @@ static int sd21_send_twi_cmd(sd21_t dev, uint8_t servo_id, uint8_t speed, uint16
 
     uint8_t reg = (servo_id) * 3;
     uint8_t data[2];
-    int ret = 0;
+    int     ret = 0;
 
     irq_disable();
 

@@ -30,8 +30,8 @@ static void pln_calib_print_usage(void)
 static int pln_calib_cmd(int argc, char **argv)
 {
     (void)argv;
-    int ret = 0;
-    func_cb_t cb = NULL;
+    int            ret              = 0;
+    func_cb_t      cb               = NULL;
     static uint8_t calib_path_index = 0;
 
     path_t *path = pf_get_path();

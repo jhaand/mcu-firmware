@@ -10,7 +10,7 @@ void pid_setup(PID_t *pid, const double kp, const double ki, const double kd)
 void pid_reset(PID_t *pid)
 {
     pid->previous_error = 0;
-    pid->ti = 0;
+    pid->ti             = 0;
 }
 
 double pid_ctrl(PID_t *pid, const double error)
@@ -34,7 +34,7 @@ double pid_ctrl(PID_t *pid, const double error)
     i = pid->ti * pid->ki;
 
     /* derivative */
-    d = error - pid->previous_error;
+    d  = error - pid->previous_error;
     d *= pid->kd;
     pid->previous_error = error;    /* backup the previous error */
 

@@ -78,8 +78,8 @@ inline void ctrl_set_pose_to_reach(ctrl_t *ctrl, const pose_t *pose_order)
 
     if (!pose_equal(&ctrl->control.pose_order, pose_order)) {
         ctrl->control.blocking_cycles = 0;
-        ctrl->control.pose_order = *pose_order;
-        ctrl->control.pose_reached = FALSE;
+        ctrl->control.pose_order      = *pose_order;
+        ctrl->control.pose_reached    = FALSE;
     }
 
     irq_enable();

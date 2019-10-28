@@ -103,7 +103,7 @@
 #define PF_SERVO_STATE_ELEVATOR_TOP     0
 #define PF_SERVO_STATE_ELEVATOR_BOTTOM  1
 #define PF_SERVO_STATE_ELEVATOR_GOLDEN  2
-//TODO: check in struct below. #define PF_SERVO_STATE_ELEVATOR_FORK    XXX
+/*TODO: check in struct below. #define PF_SERVO_STATE_ELEVATOR_FORK    XXX */
 
 /* Fork */
 #define PF_SERVO_STATE_FORK_TOP         0
@@ -147,8 +147,8 @@
 
 #ifndef CC110X_PARAMS
 #define CC110X_PARAMS               { \
-        .spi = CC110X_PARAM_SPI,  \
-        .cs = CC110X_PARAM_CS,   \
+        .spi  = CC110X_PARAM_SPI,  \
+        .cs   = CC110X_PARAM_CS,   \
         .gdo0 = CC110X_PARAM_GDO0, \
         .gdo1 = CC110X_PARAM_GDO1, \
         .gdo2 = CC110X_PARAM_GDO2, \
@@ -176,27 +176,27 @@ typedef struct {
 
 static const pf_sensor_t pf_sensors[VL53L0X_NUMOF] = {
     {
-        .angle_offset = 135,
+        .angle_offset    = 135,
         .distance_offset = ROBOT_MARGIN,
     },
     {
-        .angle_offset = 180,
+        .angle_offset    = 180,
         .distance_offset = ROBOT_MARGIN,
     },
     {
-        .angle_offset = -135,
+        .angle_offset    = -135,
         .distance_offset = ROBOT_MARGIN,
     },
     {
-        .angle_offset = -45,
+        .angle_offset    = -45,
         .distance_offset = ROBOT_MARGIN,
     },
     {
-        .angle_offset = 0,
+        .angle_offset    = 0,
         .distance_offset = ROBOT_MARGIN,
     },
     {
-        .angle_offset = 45,
+        .angle_offset    = 45,
         .distance_offset = ROBOT_MARGIN,
     },
 };
@@ -223,19 +223,19 @@ static const ctrl_quadpid_parameters_t ctrl_quadpid_params = {
         .kd = 5,
     },
 
-    .min_distance_for_angular_switch = 3,       // mm,
-    .min_angle_for_pose_reached = 2,            // deg,
+    .min_distance_for_angular_switch = 3,       /* mm, */
+    .min_angle_for_pose_reached      = 2,       /* deg, */
     .regul = CTRL_REGUL_POSE_DIST,
 };
 
 static const sd21_conf_t sd21_config[] = {
     {   /* SD12 ID0 */
-        .i2c_dev_id = 0,
-        .i2c_address = (0xC2 >> 1),
+        .i2c_dev_id    = 0,
+        .i2c_address   = (0xC2 >> 1),
         .i2c_speed_khz = I2C_SPEED_NORMAL,
 
         .servos_nb = 12,
-        .servos = {
+        .servos    = {
             /* Servo 0-1 */
             {
                 .positions = {
@@ -244,8 +244,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
-                .default_speed = 0,
-                .name = "S0-1: front left suction cup"
+                .default_speed    = 0,
+                .name             = "S0-1: front left suction cup"
             },
             /* Servo 0-2 */
             {
@@ -255,8 +255,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
-                .default_speed = 0,
-                .name = "S0-2: front central suction cup"
+                .default_speed    = 0,
+                .name             = "S0-2: front central suction cup"
             },
             /* Servo 0-3 */
             {
@@ -266,8 +266,8 @@ static const sd21_conf_t sd21_config[] = {
                     1400,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
-                .default_speed = 0,
-                .name = "S0-3: front right suction cup"
+                .default_speed    = 0,
+                .name             = "S0-3: front right suction cup"
             },
             /* Servo 0-4 */
             {
@@ -277,8 +277,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S0-4: front right arm"
+                .default_speed    = 0,
+                .name             = "S0-4: front right arm"
             },
             /* Servo 0-5 */
             {
@@ -288,8 +288,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S0-5: front central elevator"
+                .default_speed    = 0,
+                .name             = "S0-5: front central elevator"
             },
             /* Servo 0-6 */
             {
@@ -299,8 +299,8 @@ static const sd21_conf_t sd21_config[] = {
                     1425,   /* Goldenium */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S0-6: front left elevator"
+                .default_speed    = 0,
+                .name             = "S0-6: front left elevator"
             },
             /* Servo 0-7 */
             {
@@ -310,8 +310,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S0-7: front left arm"
+                .default_speed    = 0,
+                .name             = "S0-7: front left arm"
             },
             /* Servo 0-8 */
             {
@@ -321,8 +321,8 @@ static const sd21_conf_t sd21_config[] = {
                     1600,   /* Goldenium */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S0-8: front right elevator"
+                .default_speed    = 0,
+                .name             = "S0-8: front right elevator"
             },
             /* Servo 0-9 */
             {
@@ -332,19 +332,19 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S0-9: front ramp left disposal"
+                .default_speed    = 0,
+                .name             = "S0-9: front ramp left disposal"
             },
             /* Servo 0-10 */
             {
                 .positions = {
                     1900,   /* Right */
-                    1475,   /* Left  */ // FIXME: réparer la rampe !
+                    1475,   /* Left  */ /* FIXME: réparer la rampe ! */
                     1675,   /* Horizontal */
                 },
                 .default_position = 2,
-                .default_speed = 0,
-                .name = "S0-10: front ramp rotation"
+                .default_speed    = 0,
+                .name             = "S0-10: front ramp rotation"
             },
             /* Servo 0-11 */
             {
@@ -354,8 +354,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S0-11: front ramp right disposal"
+                .default_speed    = 0,
+                .name             = "S0-11: front ramp right disposal"
             },
             /* Servo 0-12 */
             {
@@ -365,18 +365,18 @@ static const sd21_conf_t sd21_config[] = {
                     950,    /* Default */
                 },
                 .default_position = 0,
-                .default_speed = 0,
-                .name = "S0-12: front ramp puck block"
+                .default_speed    = 0,
+                .name             = "S0-12: front ramp puck block"
             },
         },
     },
     {   /* SD12 ID1 */
-        .i2c_dev_id = 0,
-        .i2c_address = (0xC4 >> 1),
+        .i2c_dev_id    = 0,
+        .i2c_address   = (0xC4 >> 1),
         .i2c_speed_khz = I2C_SPEED_NORMAL,
 
         .servos_nb = 12,
-        .servos = {
+        .servos    = {
             /* Servo 1-1 */
             {
                 .positions = {
@@ -385,8 +385,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* */
                 },
                 .default_position = 2,
-                .default_speed = 0,
-                .name = "S1-1: "
+                .default_speed    = 0,
+                .name             = "S1-1: "
             },
             /* Servo 1-2 */
             {
@@ -396,8 +396,8 @@ static const sd21_conf_t sd21_config[] = {
                     1975,   /* Default */
                 },
                 .default_position = 2,
-                .default_speed = 0,
-                .name = "S1-2: Front fork"
+                .default_speed    = 0,
+                .name             = "S1-2: Front fork"
             },
             /* Servo 1-3 */
             {
@@ -407,8 +407,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 0,
-                .default_speed = 0,
-                .name = "S1-3: back ramp puck block"
+                .default_speed    = 0,
+                .name             = "S1-3: back ramp puck block"
             },
             /* Servo 1-4 */
             {
@@ -418,8 +418,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S1-4: back ramp left disposal"
+                .default_speed    = 0,
+                .name             = "S1-4: back ramp left disposal"
             },
             /* Servo 1-5 */
             {
@@ -429,8 +429,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S1-5: back ramp right disposal"
+                .default_speed    = 0,
+                .name             = "S1-5: back ramp right disposal"
             },
             /* Servo 1-6 */
             {
@@ -440,8 +440,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Horizontal */
                 },
                 .default_position = 2,
-                .default_speed = 0,
-                .name = "S1-6: back ramp rotation"
+                .default_speed    = 0,
+                .name             = "S1-6: back ramp rotation"
             },
             /* Servo 1-7 */
             {
@@ -451,8 +451,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S1-7: back right elevator"
+                .default_speed    = 0,
+                .name             = "S1-7: back right elevator"
             },
             /* Servo 1-8 */
             {
@@ -462,8 +462,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S1-8: back central elevator"
+                .default_speed    = 0,
+                .name             = "S1-8: back central elevator"
             },
             /* Servo 1-9 */
             {
@@ -473,8 +473,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Default */
                 },
                 .default_position = 1,
-                .default_speed = 0,
-                .name = "S1-9: back left elevator"
+                .default_speed    = 0,
+                .name             = "S1-9: back left elevator"
             },
             /* Servo 1-10 */
             {
@@ -484,8 +484,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
-                .default_speed = 0,
-                .name = "S1-10: back right suction cup"
+                .default_speed    = 0,
+                .name             = "S1-10: back right suction cup"
             },
             /* Servo 1-11 */
             {
@@ -495,8 +495,8 @@ static const sd21_conf_t sd21_config[] = {
                     1575,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
-                .default_speed = 0,
-                .name = "S1-11: back central suction cup"
+                .default_speed    = 0,
+                .name             = "S1-11: back central suction cup"
             },
             /* Servo 1-12 */
             {
@@ -506,8 +506,8 @@ static const sd21_conf_t sd21_config[] = {
                     1500,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
-                .default_speed = 0,
-                .name = "S1-12: back left suction cup"
+                .default_speed    = 0,
+                .name             = "S1-12: back left suction cup"
             },
         },
     }

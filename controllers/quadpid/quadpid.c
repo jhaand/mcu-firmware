@@ -28,7 +28,7 @@ static polar_t compute_position_error(const ctrl_quadpid_t *ctrl,
                                       const pose_t *pose_order, const pose_t *pose_current)
 {
     polar_t error;
-    double x, y, O;
+    double  x, y, O;
 
     (void)ctrl;
 
@@ -37,7 +37,7 @@ static polar_t compute_position_error(const ctrl_quadpid_t *ctrl,
 
     O = limit_angle_rad(atan2(y, x) - DEG2RAD(pose_current->O));
 
-    error.angle = RAD2DEG(O);
+    error.angle    = RAD2DEG(O);
     error.distance = sqrt(square(x) + square(y));
 
     return error;
@@ -87,7 +87,7 @@ int ctrl_quadpid_speed(ctrl_quadpid_t *ctrl,
     polar_t speed_error;
 
     speed_error.distance = command->distance - speed_current->distance;
-    speed_error.angle = command->angle - speed_current->angle;
+    speed_error.angle    = command->angle - speed_current->angle;
 
     if ((ctrl->control.anti_blocking_on)
         && (fabs(speed_current->distance) <
@@ -102,7 +102,7 @@ int ctrl_quadpid_speed(ctrl_quadpid_t *ctrl,
 
     if (ctrl->control.blocking_cycles >= ctrl->pf_conf->blocking_cycles_max) {
         command->distance = 0;
-        command->angle = 0;
+        command->angle    = 0;
         ctrl_set_mode((ctrl_t *)ctrl, CTRL_MODE_BLOCKED);
         ctrl->control.blocking_cycles = 0;
 
@@ -132,7 +132,7 @@ int ctrl_quadpid_stop(ctrl_t *ctrl, polar_t *command)
     }
     else {
         command->distance = 0;
-        command->angle = 0;
+        command->angle    = 0;
 
         return 0;
     }
@@ -142,7 +142,7 @@ int ctrl_quadpid_running_speed(ctrl_t *ctrl, polar_t *command)
 {
     polar_t *speed_order = NULL;
 
-    const pose_t *pose_current = ctrl_get_pose_current(ctrl);
+    const pose_t  *pose_current  = ctrl_get_pose_current(ctrl);
     const polar_t *speed_current = ctrl_get_speed_current(ctrl);
 
     ctrl_quadpid_t *ctrl_quadpid = (ctrl_quadpid_t *)ctrl;
@@ -163,7 +163,7 @@ int ctrl_quadpid_running_speed(ctrl_t *ctrl, polar_t *command)
 
 
     command->distance = speed_order->distance;
-    command->angle = speed_order->angle;
+    command->angle    = speed_order->angle;
 
     /* limit speed command->*/
     command->distance = limit_speed_command(command->distance,
@@ -179,10 +179,10 @@ int ctrl_quadpid_running_speed(ctrl_t *ctrl, polar_t *command)
 
 int ctrl_quadpid_ingame(ctrl_t *ctrl, polar_t *command)
 {
-    const pose_t *pose_order = NULL;
-    polar_t *speed_order = NULL;
+    const pose_t *pose_order  = NULL;
+    polar_t      *speed_order = NULL;
 
-    const pose_t *pose_current = ctrl_get_pose_current(ctrl);
+    const pose_t  *pose_current  = ctrl_get_pose_current(ctrl);
     const polar_t *speed_current = ctrl_get_speed_current(ctrl);
 
     ctrl_quadpid_t *ctrl_quadpid = (ctrl_quadpid_t *)ctrl;
@@ -274,7 +274,7 @@ int ctrl_quadpid_ingame(ctrl_t *ctrl, polar_t *command)
             pid_reset(&ctrl_quadpid->quadpid_params.angular_speed_pid);
 
             ctrl_set_pose_reached((ctrl_t *) ctrl_quadpid);
-            ctrl_quadpid->quadpid_params.regul = CTRL_REGUL_POSE_DIST; //CTRL_REGUL_IDLE;
+            ctrl_quadpid->quadpid_params.regul = CTRL_REGUL_POSE_DIST; /*CTRL_REGUL_IDLE; */
         }
     }
 

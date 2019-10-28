@@ -82,12 +82,12 @@ typedef void (*ctrl_post_mode_cb_t)(pose_t *, polar_t *, polar_t *);
  *@brief    Controllers working mode
  */
 typedef enum {
-    CTRL_MODE_STOP = 0,     /**< Stopped */
-    CTRL_MODE_IDLE,         /**< Idled, left free of motion */
-    CTRL_MODE_BLOCKED,      /**< Blocked, often meaning something went wrong */
-    CTRL_MODE_RUNNING,      /**< Running */
-    CTRL_MODE_RUNNING_SPEED,/**< Running only speed */
-    CTRL_MODE_NUMOF,        /**< Number of mode, never use it as an index */
+    CTRL_MODE_STOP = 0,      /**< Stopped */
+    CTRL_MODE_IDLE,          /**< Idled, left free of motion */
+    CTRL_MODE_BLOCKED,       /**< Blocked, often meaning something went wrong */
+    CTRL_MODE_RUNNING,       /**< Running */
+    CTRL_MODE_RUNNING_SPEED, /**< Running only speed */
+    CTRL_MODE_NUMOF,         /**< Number of mode, never use it as an index */
 } ctrl_mode_t;
 
 /**
@@ -116,17 +116,14 @@ typedef struct {
  * @brief   Controllers pre and post callbacks for each mode
  */
 typedef struct {
-    const ctrl_pre_mode_cb_t \
-        ctrl_pre_mode_cb[CTRL_MODE_NUMOF];  /**< Modes pre callbacks */
-    const ctrl_post_mode_cb_t \
-        ctrl_post_mode_cb[CTRL_MODE_NUMOF]; /**< Modes post callbacks */
+    const ctrl_pre_mode_cb_t
+        ctrl_pre_mode_cb[CTRL_MODE_NUMOF];        /**< Modes pre callbacks */
+    const ctrl_post_mode_cb_t
+        ctrl_post_mode_cb[CTRL_MODE_NUMOF];       /**< Modes post callbacks */
 
-    const uint16_t  blocking_speed_treshold;        /**< Blocking speed
-                                                         treshold */
-    const uint16_t  blocking_speed_error_treshold;  /**< Blocking speed error
-                                                         treshold */
-    const uint16_t  blocking_cycles_max;            /**< Blocking cycles
-                                                         maximum number */
+    const uint16_t blocking_speed_treshold;       /**< Blocking speed threshold */
+    const uint16_t blocking_speed_error_treshold; /**< Blocking speed error threshold */
+    const uint16_t blocking_cycles_max;           /**< Blocking cycles maximum number */
 } ctrl_platform_configuration_t;
 
 /**

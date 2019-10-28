@@ -25,12 +25,12 @@ static VL53L0X_Error status[VL53L0X_NUMOF];
 
 int vl53l0x_init_dev(vl53l0x_t dev)
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+    VL53L0X_Error  Status         = VL53L0X_ERROR_NONE;
     VL53L0X_Dev_t *st_api_vl53l0x = NULL;
-    uint32_t refSpadCount;
-    uint8_t isApertureSpads;
-    uint8_t VhvSettings;
-    uint8_t PhaseCal;
+    uint32_t       refSpadCount;
+    uint8_t        isApertureSpads;
+    uint8_t        VhvSettings;
+    uint8_t        PhaseCal;
 
     status[dev] = VL53L0X_ERROR_UNDEFINED;
 
@@ -43,11 +43,11 @@ int vl53l0x_init_dev(vl53l0x_t dev)
     /* Retrieve ToF */
     const vl53l0x_conf_t *vl53l0x = &vl53l0x_config[dev];
 
-    st_api_vl53l0x->I2cDev          =  vl53l0x->i2c_dev;
-    st_api_vl53l0x->I2cDevAddr      =  vl53l0x->i2c_addr;
+    st_api_vl53l0x->I2cDev     =  vl53l0x->i2c_dev;
+    st_api_vl53l0x->I2cDevAddr =  vl53l0x->i2c_addr;
 
     /* Force use of I2C communication protocol */
-    st_api_vl53l0x->comms_type      =  1;
+    st_api_vl53l0x->comms_type =  1;
 
     /* Data init */
     if (Status == VL53L0X_ERROR_NONE) {
@@ -87,7 +87,7 @@ int vl53l0x_init_dev(vl53l0x_t dev)
 
 int vl53l0x_reset_dev(vl53l0x_t dev)
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+    VL53L0X_Error  Status         = VL53L0X_ERROR_NONE;
     VL53L0X_Dev_t *st_api_vl53l0x = &devices[dev];
 
     status[dev] = VL53L0X_ERROR_UNDEFINED;
@@ -119,7 +119,7 @@ void vl53l0x_init(void)
 uint16_t vl53l0x_continuous_ranging_get_measure(vl53l0x_t dev)
 {
     VL53L0X_RangingMeasurementData_t RangingMeasurementData;
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+    VL53L0X_Error  Status = VL53L0X_ERROR_NONE;
     FixPoint1616_t LimitCheckCurrent;
     VL53L0X_Dev_t *st_api_vl53l0x = NULL;
 
