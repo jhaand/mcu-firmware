@@ -24,7 +24,7 @@ UNCRUSTIFY_OUTPUT_DIR="${DIR}/../../uncrustify-output"
 CUR_DIR=$(pwd)
 cd "${DIR}/../"
 
-if [ -e "/usr/bin/uncrustify"]; then
+if [ ! -e "/usr/bin/uncrustify" ]; then
     echo "uncrustify binary not found, please install it. On Ubuntu : apt install uncrustify"
     exit 1
 fi
