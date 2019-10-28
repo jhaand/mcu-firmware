@@ -29,6 +29,15 @@ if [ ! -e "/usr/bin/uncrustify" ]; then
     exit 1
 fi
 
+# If continuous integration call, do not answer questions
+if [ "$1" = "-ci" ]; then
+    shift
+    echo "Launched in continuous integration mode"
+    CI_MODE=1
+else
+    CI_MODE=0
+fi
+
 # Check *.c files
 BAD_FILES=""
 echo "Scan .c files ----"
@@ -55,6 +64,13 @@ if [ -z "${BAD_FILES[0]}" ]; then
     echo "All files are good ! You are good to go"
     exit 0
 else
+    if [ ${CI_MODE} = "1" ]; then
+        echo
+        echo "${BAD_FILES}"
+        echo "Some files aren't correct, please check details by calling:"
+        echo "   ./$0"
+        exit 1
+    fi
     read -n 1 -p "Some files aren't correct, do you want to automatically generate corrected file ? (y/N) " answer
     [ -z "$answer" ] && answer="N"
     if [ ${answer^^} = "Y" ]; then
@@ -88,4 +104,4 @@ fi
 
 cd $CUR_DIR
 echo "That's all folks !"
-exit 0
+exit 1
