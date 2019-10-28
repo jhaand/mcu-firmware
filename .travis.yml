@@ -16,13 +16,16 @@ install:
       - uname -a
       - wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2018q4/$TOOLCHAIN_NAME-linux.tar.bz2
       - tar -C /opt/toolchain/ -xf $TOOLCHAIN_NAME-linux.tar.bz2
-      - sudo apt-get install -qq gcc-8 gcc-8-multilib gcc-multilib libc6-dev
+      - sudo apt-get install -qq gcc-8 gcc-8-multilib gcc-multilib libc6-dev uncrustify
       - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 1
       - gcc --version
       - arm-none-eabi-gcc --version
+      - uncrustify --version
 before_script:
       - git clone https://github.com/RIOT-OS/RIOT.git $RIOTBASE -b 2019.07-branch --depth 1
 script:
       - cd platforms/$PLATFORM
       - make -j$(nproc)
       - make distclean
+      - cd ${TRAVIS_BUILD_DIR}
+      - bash tools/check-codingrules.sh -ci
