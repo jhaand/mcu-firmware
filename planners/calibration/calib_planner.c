@@ -35,7 +35,7 @@ static int pln_calib_cmd(int argc, char **argv)
     static uint8_t calib_path_index = 0;
 
     path_t *path = pf_get_path();
-    ctrl_t* ctrl = pf_get_ctrl();
+    ctrl_t *ctrl = pf_get_ctrl();
 
     /* Always print usage first */
     pln_calib_print_usage();
@@ -61,7 +61,7 @@ static int pln_calib_cmd(int argc, char **argv)
         /* Wait for a key pressed */
         c = getchar();
 
-        switch(c) {
+        switch (c) {
             /* Next position */
             case 'n':
                 if (calib_path_index < path->nb_pose - 1)
@@ -86,7 +86,7 @@ static int pln_calib_cmd(int argc, char **argv)
                 break;
             case 'a':
                 cb = path_get_pose_at_idx(path, calib_path_index)->act;
-                if(cb != NULL) {
+                if (cb != NULL) {
                     puts("Launch callback !");
                     (*cb)();
                 }

@@ -48,12 +48,12 @@ void pf_add_shell_command(shell_command_t *command)
     shell_commands[command_id++] = *command;
 }
 
-inline ctrl_quadpid_t* pf_get_quadpid_ctrl(void)
+inline ctrl_quadpid_t *pf_get_quadpid_ctrl(void)
 {
     return &ctrl_quadpid;
 }
 
-inline ctrl_t* pf_get_ctrl(void)
+inline ctrl_t *pf_get_ctrl(void)
 {
     return (ctrl_t *)&ctrl_quadpid;
 }
@@ -63,7 +63,7 @@ inline path_t *pf_get_path(void)
     return &robot_path;
 }
 
-void pf_ctrl_pre_running_cb(pose_t *robot_pose, polar_t* robot_speed, polar_t *motor_command)
+void pf_ctrl_pre_running_cb(pose_t *robot_pose, polar_t *robot_speed, polar_t *motor_command)
 {
     (void)motor_command;
 
@@ -74,7 +74,7 @@ void pf_ctrl_pre_running_cb(pose_t *robot_pose, polar_t* robot_speed, polar_t *m
     odometry_update(robot_pose, robot_speed, SEGMENT);
 }
 
-void pf_ctrl_post_stop_cb(pose_t *robot_pose, polar_t* robot_speed, polar_t *motor_command)
+void pf_ctrl_post_stop_cb(pose_t *robot_pose, polar_t *robot_speed, polar_t *motor_command)
 {
     (void)robot_pose;
     (void)robot_speed;
@@ -87,7 +87,7 @@ void pf_ctrl_post_stop_cb(pose_t *robot_pose, polar_t* robot_speed, polar_t *mot
     motor_drive(motor_command);
 }
 
-void pf_ctrl_post_running_cb(pose_t *robot_pose, polar_t* robot_speed, polar_t *motor_command)
+void pf_ctrl_post_running_cb(pose_t *robot_pose, polar_t *robot_speed, polar_t *motor_command)
 {
     (void)robot_pose;
     (void)robot_speed;
@@ -135,8 +135,8 @@ void pf_fixed_obstacles_init(void)
     if (nb_vertices < POLY_MAX_POINTS) {
         polygon.points[polygon.count++] = (pose_t){.x = -1000, .y = 0 };
         polygon.points[polygon.count++] = (pose_t){.x =  1000, .y = 0 };
-        polygon.points[polygon.count++] = (pose_t){.x =  1000, .y = 70 + ROBOT_MARGIN};
-        polygon.points[polygon.count++] = (pose_t){.x = -1000, .y = 70 + ROBOT_MARGIN};
+        polygon.points[polygon.count++] = (pose_t){.x =  1000, .y = 70 + ROBOT_MARGIN };
+        polygon.points[polygon.count++] = (pose_t){.x = -1000, .y = 70 + ROBOT_MARGIN };
         add_polygon(&polygon);
     }
 
@@ -144,10 +144,10 @@ void pf_fixed_obstacles_init(void)
     polygon.count = 0;
     nb_vertices = 4;
     if (nb_vertices < POLY_MAX_POINTS) {
-        polygon.points[polygon.count++] = (pose_t){.x = -1050 - ROBOT_MARGIN, .y = 1540 - ROBOT_MARGIN};
-        polygon.points[polygon.count++] = (pose_t){.x =  1050 + ROBOT_MARGIN, .y = 1540 - ROBOT_MARGIN};
-        polygon.points[polygon.count++] = (pose_t){.x =  1050 + ROBOT_MARGIN, .y = 2000};
-        polygon.points[polygon.count++] = (pose_t){.x = -1050 - ROBOT_MARGIN, .y = 2000};
+        polygon.points[polygon.count++] = (pose_t){.x = -1050 - ROBOT_MARGIN, .y = 1540 - ROBOT_MARGIN };
+        polygon.points[polygon.count++] = (pose_t){.x =  1050 + ROBOT_MARGIN, .y = 1540 - ROBOT_MARGIN };
+        polygon.points[polygon.count++] = (pose_t){.x =  1050 + ROBOT_MARGIN, .y = 2000 };
+        polygon.points[polygon.count++] = (pose_t){.x = -1050 - ROBOT_MARGIN, .y = 2000 };
         add_polygon(&polygon);
     }
 
@@ -155,10 +155,10 @@ void pf_fixed_obstacles_init(void)
     polygon.count = 0;
     nb_vertices = 4;
     if (nb_vertices < POLY_MAX_POINTS) {
-        polygon.points[polygon.count++] = (pose_t){.x = -20 - ROBOT_MARGIN, .y = 1350 - ROBOT_MARGIN};
-        polygon.points[polygon.count++] = (pose_t){.x =  20 + ROBOT_MARGIN, .y = 1350 - ROBOT_MARGIN};
-        polygon.points[polygon.count++] = (pose_t){.x =  20 + ROBOT_MARGIN, .y = 2000};
-        polygon.points[polygon.count++] = (pose_t){.x = -20 - ROBOT_MARGIN, .y = 2000};
+        polygon.points[polygon.count++] = (pose_t){.x = -20 - ROBOT_MARGIN, .y = 1350 - ROBOT_MARGIN };
+        polygon.points[polygon.count++] = (pose_t){.x =  20 + ROBOT_MARGIN, .y = 1350 - ROBOT_MARGIN };
+        polygon.points[polygon.count++] = (pose_t){.x =  20 + ROBOT_MARGIN, .y = 2000 };
+        polygon.points[polygon.count++] = (pose_t){.x = -20 - ROBOT_MARGIN, .y = 2000 };
         add_polygon(&polygon);
     }
 }
@@ -195,13 +195,15 @@ static void emitter_loop(void)
 {
     cc110x_t *dev = &pf_cc1101_device;
 
-    uint8_t pkt[FSIZE+1] = {FSIZE};
-    memset(pkt+1, 0, FSIZE);
+    uint8_t pkt[FSIZE + 1] = { FSIZE };
+
+    memset(pkt + 1, 0, FSIZE);
 
     pkt[0] = FSIZE;
 
-    for(uint8_t i = 2; i < FSIZE+1; i++)
+    for (uint8_t i = 2; i < FSIZE + 1; i++) {
         pkt[i] = i + 1;
+    }
 
     cc110x_write_reg(dev, CC110X_IOCFG2,
                      CC110X_GDO_LOW_ON_TX_FIFO_BELOW_THRESHOLD);
@@ -222,8 +224,9 @@ static void emitter_loop(void)
             static uint8_t direction = 0;
             static uint32_t motor_time_sec = 120 * US_PER_MS; /* 120 sec */
 
-            for (uint8_t i = 2; i < FSIZE+1; i++)
+            for (uint8_t i = 2; i < FSIZE + 1; i++) {
                 pkt[i] = direction ? 0x11 : 0xee;
+            }
 
             if (1) {
                 pkt[2] = 0x55;
@@ -244,7 +247,7 @@ static void emitter_loop(void)
 
         printf("Write packet into TX FIFO\n");
         /* Write packet into TX FIFO */
-        cc110x_writeburst_reg(dev, CC110X_TXFIFO, (char *)pkt, FSIZE+1);
+        cc110x_writeburst_reg(dev, CC110X_TXFIFO, (char *)pkt, FSIZE + 1);
 
         printf("Before TX mode : %d bytes to send\n", cc110x_read_status(dev, CC110X_TXBYTES));
         /* Switch to TX mode */
@@ -271,6 +274,7 @@ static void emitter_init(void)
     cc110x_t *dev = &pf_cc1101_device;
 
     uint8_t bus = SPI_DEV(0);
+
     cc110x_setup(dev, &cc110x_params[bus]);
     gpio_init_af(spi_config[bus].mosi_pin, GPIO_AF7);
 
@@ -299,7 +303,7 @@ static void *pf_task_countdown(void *arg)
     (void)arg;
     static int countdown = GAME_DURATION_SEC;
 
-    ctrl_t* controller = (ctrl_t*)&ctrl_quadpid;
+    ctrl_t *controller = (ctrl_t *)&ctrl_quadpid;
 
     for (;;) {
         xtimer_ticks32_t loop_start_time = xtimer_now();
@@ -308,7 +312,7 @@ static void *pf_task_countdown(void *arg)
         }
         else {
             DEBUG("                                      GAME TIME: %d\n",
-                countdown);
+                  countdown);
             countdown--;
         }
         xtimer_periodic_wakeup(&loop_start_time, US_PER_SEC);
@@ -342,7 +346,7 @@ void *task_radio(void *arg)
 #ifdef CALIBRATION
 static void *pf_task_start_shell(void *arg)
 {
-    int* start_shell = (int*)arg;
+    int *start_shell = (int *)arg;
 
     /* Wait for Enter to be pressed */
     getchar();
@@ -359,7 +363,7 @@ void pf_init_tasks(void)
 {
     static int start_shell = FALSE;
 
-    ctrl_t* controller = (ctrl_t*)&ctrl_quadpid;
+    ctrl_t *controller = (ctrl_t *)&ctrl_quadpid;
 
 #ifdef CALIBRATION
     int countdown = PF_START_COUNTDOWN;
@@ -367,9 +371,9 @@ void pf_init_tasks(void)
     /* Create thread that up a flag on key pressed to start a shell instead of
        planner below */
     kernel_pid_t start_shell_pid = thread_create(start_shell_thread_stack,
-                  sizeof(start_shell_thread_stack),
-                  THREAD_PRIORITY_MAIN + 1, 0,
-                  pf_task_start_shell, &start_shell, "shell");
+                                                 sizeof(start_shell_thread_stack),
+                                                 THREAD_PRIORITY_MAIN + 1, 0,
+                                                 pf_task_start_shell, &start_shell, "shell");
 
     DEBUG("Press Enter to enter calibration mode...\n");
 
@@ -387,7 +391,7 @@ void pf_init_tasks(void)
                   sizeof(controller_thread_stack),
                   THREAD_PRIORITY_MAIN - 4, 0,
                   task_ctrl_update,
-                  (void*)controller,
+                  (void *)controller,
                   "motion control");
     /* Create planner thread */
     thread_create(planner_thread_stack,
@@ -401,7 +405,7 @@ void pf_init_tasks(void)
                   sizeof(radio_thread_stack),
                   THREAD_PRIORITY_MAIN + 1, 0,
                   task_radio,
-                  (void*)NULL,
+                  (void *)NULL,
                   "radio control");
 
     /* If Enter was pressed, start shell */
@@ -419,28 +423,28 @@ void pf_init_tasks(void)
     else {
         /* Stop useless task_start_shell thread still running */
 #ifdef CALIBRATION
-        thread_t* start_shell_thread = (thread_t*)thread_get(start_shell_pid);
+        thread_t *start_shell_thread = (thread_t *)thread_get(start_shell_pid);
         if (start_shell_thread) {
             sched_set_status(start_shell_thread, STATUS_STOPPED);
         }
 #endif  /* CALIBRATION */
 
         /* Wait for start switch */
-        while(!pf_is_game_launched());
+        while (!pf_is_game_launched()) {}
 
         /* Debug indicator to track the non starting state */
         gpio_set(GPIO_DEBUG_LED);
 
         /* Create countdown thread */
         thread_create(countdown_thread_stack,
-                sizeof(countdown_thread_stack),
-                THREAD_PRIORITY_MAIN - 3, 0,
-                pf_task_countdown,
-                NULL,
-                "countdown");
+                      sizeof(countdown_thread_stack),
+                      THREAD_PRIORITY_MAIN - 3, 0,
+                      pf_task_countdown,
+                      NULL,
+                      "countdown");
 
         /* Start game */
         DEBUG("platform: Start game\n");
-        pln_start((ctrl_t*)controller);
+        pln_start((ctrl_t *)controller);
     }
 }

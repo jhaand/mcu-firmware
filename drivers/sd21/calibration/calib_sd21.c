@@ -14,7 +14,7 @@
 static void sd21_calib_print_usage(sd21_t dev, uint8_t servo_id)
 {
     printf(">>> Entering calibration for servo %u of SD21 board %u\n\n",
-            servo_id, dev);
+           servo_id, dev);
 
     puts("\t'o'\t Opened position");
     puts("\t'c'\t Closed position");
@@ -23,9 +23,9 @@ static void sd21_calib_print_usage(sd21_t dev, uint8_t servo_id)
     puts("\t'q'\t Quit calibration");
     puts("\t'r'\t Reset to center position");
     printf("\t'+'\t Add %u microseconds to current position\n",
-            SD21_SERVO_POS_STEP);
+           SD21_SERVO_POS_STEP);
     printf("\t'-'\t Substract %u microseconds to current position\n",
-            SD21_SERVO_POS_STEP);
+           SD21_SERVO_POS_STEP);
     puts("\t'0..1'\t Switch to predefined positions (between 0 and 9)");
 }
 
@@ -71,7 +71,7 @@ static int sd21_calib_servo_cmd(int argc, char **argv)
         /* useful only for 0 to 9 keys */
         uint8_t defined_position = (uint8_t)atoi(c);
 
-        switch(c[0]) {
+        switch (c[0]) {
             /* Opened position */
             case 'o':
                 sd21_servo_reach_position(dev, servo_id, SD21_SERVO_POS_OPEN);
@@ -83,7 +83,7 @@ static int sd21_calib_servo_cmd(int argc, char **argv)
             /* Next servomotor */
             case 'n':
                 servo_id = (servo_id >= sd21_config[dev].servos_nb - 1) ?
-                    sd21_config[dev].servos_nb - 1 : servo_id + 1;
+                           sd21_config[dev].servos_nb - 1 : servo_id + 1;
                 printf("\n\n%s\n", sd21_servo_get_name(dev, servo_id));
                 break;
             /* Previous servomotor */
@@ -98,12 +98,12 @@ static int sd21_calib_servo_cmd(int argc, char **argv)
             /* Add SD21_SERVO_POS_STEP */
             case '+':
                 sd21_servo_control(dev, servo_id, 0, current_position
-                        + SD21_SERVO_POS_STEP);
+                                   + SD21_SERVO_POS_STEP);
                 break;
             /* Substract SD21_SERVO_POS_STEP */
             case '-':
                 sd21_servo_control(dev, servo_id, 0, current_position
-                        - SD21_SERVO_POS_STEP);
+                                   - SD21_SERVO_POS_STEP);
                 break;
             /* Intermediate positions */
             case '0':   /* SD21_SERVO_POS_OPEN */
@@ -136,7 +136,7 @@ sd21_calib_servo_cmd_err:
 
 void sd21_calib_init(void)
 {
-    shell_command_t cmd = { 
+    shell_command_t cmd = {
         "sc", "sd21_calib <board_id> <servo_id>",
         sd21_calib_servo_cmd
     };

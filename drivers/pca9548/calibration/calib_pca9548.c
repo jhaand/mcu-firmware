@@ -15,7 +15,7 @@
 static void pca9548_calib_print_usage(pca9548_t dev)
 {
     printf(">>> Entering calibration for pca9548 %u\n\n",
-            dev);
+           dev);
 
 #ifdef PCA9548_CALIB_CB
     puts("\t'a'\t Run defined callback");
@@ -59,17 +59,17 @@ static int pca9548_calib_cmd(int argc, char **argv)
         /* useful only for 0 to 7 keys */
         uint8_t channel_selected = (uint8_t)atoi(c);
 
-        switch(c[0]) {
+        switch (c[0]) {
 #ifdef PCA9548_CALIB_CB
             /* Calibration callback */
             case 'a':
                 PCA9548_CALIB_CB(dev);
                 break;
-#endif /* PCA9548_CALIB_CB */
+#endif
             /* Next channel */
             case 'n':
                 channel_id = (channel_id >= pca9548_config[dev].channel_numof - 1) ?
-                    pca9548_config[dev].channel_numof - 1 : channel_id + 1;
+                             pca9548_config[dev].channel_numof - 1 : channel_id + 1;
                 break;
             /* Previous channel */
             case 'p':
@@ -105,7 +105,7 @@ pca9548_calib_servo_cmd_err:
 
 void pca9548_calib_init(void)
 {
-    shell_command_t cmd = { 
+    shell_command_t cmd = {
         "pcc", "pcc <pca9548_id>",
         pca9548_calib_cmd
     };

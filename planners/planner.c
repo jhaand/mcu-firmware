@@ -29,20 +29,20 @@ void pln_set_allow_change_path_pose(uint8_t value)
     allow_change_path_pose = value;
 }
 
-void pln_start(ctrl_t* ctrl)
+void pln_start(ctrl_t *ctrl)
 {
     ctrl_set_mode(ctrl, CTRL_MODE_RUNNING);
     pln_started = TRUE;
 }
 
-void pln_stop(ctrl_t* ctrl)
+void pln_stop(ctrl_t *ctrl)
 {
     ctrl_set_mode(ctrl, CTRL_MODE_STOP);
     pln_started = FALSE;
 }
 
-static int trajectory_get_route_update(ctrl_t* ctrl, const pose_t *robot_pose,
-        pose_t *pose_to_reach, polar_t *speed_order, path_t *path)
+static int trajectory_get_route_update(ctrl_t *ctrl, const pose_t *robot_pose,
+                                       pose_t *pose_to_reach, polar_t *speed_order, path_t *path)
 {
     const path_pose_t *current_path_pos = path_get_current_path_pos(path);
     static int index = 1;
@@ -85,7 +85,7 @@ static int trajectory_get_route_update(ctrl_t* ctrl, const pose_t *robot_pose,
     }
 
     if (need_update) {
-	DEBUG("planner: Updating graph !\n");
+        DEBUG("planner: Updating graph !\n");
         index = update_graph(robot_pose, &(current_path_pos->pos));
 
         control_loop = path->nb_pose;
@@ -142,7 +142,7 @@ void *task_planner(void *arg)
     /* 2019: Camp left is purple, right is yellow */
     printf("%s camp\n", camp_left ? "LEFT" : "RIGHT");
 
-    path_t* path = pf_get_path();
+    path_t *path = pf_get_path();
     if (!path) {
         printf("machine has no path\n");
     }
@@ -178,7 +178,7 @@ void *task_planner(void *arg)
         /* reverse gear selection is granted per point to reach, in path */
         ctrl_set_allow_reverse(ctrl, current_path_pos->allow_reverse);
 
-        const pose_t* pose_current = ctrl_get_pose_current(ctrl);
+        const pose_t *pose_current = ctrl_get_pose_current(ctrl);
 
         if (trajectory_get_route_update(ctrl, pose_current, &pose_order, &speed_order, path) == -1) {
             ctrl_set_mode(ctrl, CTRL_MODE_STOP);

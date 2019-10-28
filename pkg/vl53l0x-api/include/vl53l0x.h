@@ -30,7 +30,7 @@
 #include "periph/i2c.h"
 
 /* VL53L0X ST API includes */
-#include "vl53l0x_api.h"                                                        
+#include "vl53l0x_api.h"
 #include "vl53l0x_platform.h"
 
 

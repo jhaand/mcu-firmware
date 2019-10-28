@@ -82,7 +82,7 @@ sd21_send_twi_cmd_err:
 }
 
 int sd21_servo_control(sd21_t dev, uint8_t servo_id, uint8_t speed,
-        uint16_t position)
+                       uint16_t position)
 {
     sd21_check_config(dev, servo_id);
 
@@ -106,7 +106,7 @@ int sd21_servo_reach_position(sd21_t dev, uint8_t servo_id, uint8_t pos_index)
     const sd21_servo_t *servo = &sd21->servos[servo_id];
 
     return sd21_servo_control(dev, servo_id, servo->default_speed,
-            servo->positions[pos_index]);
+                              servo->positions[pos_index]);
 }
 
 int sd21_servo_reset_position(sd21_t dev, uint8_t servo_id)
@@ -121,7 +121,7 @@ int sd21_servo_reset_position(sd21_t dev, uint8_t servo_id)
     assert(servo->default_position < SD21_SERVO_POS_NUMOF);
 
     return sd21_servo_control(dev, servo_id, servo->default_speed,
-            servo->positions[servo->default_position]);
+                              servo->positions[servo->default_position]);
 }
 
 uint16_t sd21_servo_get_position(sd21_t dev, uint8_t servo_id)
@@ -131,7 +131,7 @@ uint16_t sd21_servo_get_position(sd21_t dev, uint8_t servo_id)
     return sd21_servo_positions[dev][servo_id];
 }
 
-const char* sd21_servo_get_name(sd21_t dev, uint8_t servo_id)
+const char *sd21_servo_get_name(sd21_t dev, uint8_t servo_id)
 {
     sd21_check_config(dev, servo_id);
 
@@ -149,12 +149,12 @@ void sd21_init(void)
         xtimer_usleep(250 * US_PER_MS);
         /* Close all servomotors */
         for (uint8_t servo_id = 0; servo_id < sd21_config[dev].servos_nb;
-                servo_id++) {
-                if (sd21_servo_reset_position(dev, servo_id))
-                    printf("Servo %u from board %u init failed !", servo_id,
-                            dev);
-                /* Wait a small tempo to avoid current peak */
-                xtimer_usleep(50 * US_PER_MS);
+             servo_id++) {
+            if (sd21_servo_reset_position(dev, servo_id))
+                printf("Servo %u from board %u init failed !", servo_id,
+                       dev);
+            /* Wait a small tempo to avoid current peak */
+            xtimer_usleep(50 * US_PER_MS);
         }
     }
 }

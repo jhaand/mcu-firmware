@@ -16,6 +16,7 @@ int8_t add_dyn_obstacle(const uint16_t dev, const pose_t *robot_pose, double ang
     uint8_t nb_vertices;
 
     pose_t robot_pose_tmp = *robot_pose;
+
     robot_pose_tmp.O += angle_offset;
     robot_pose_tmp.O = (int16_t)robot_pose_tmp.O % 360;
     double angle = DEG2RAD(robot_pose_tmp.O);

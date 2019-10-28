@@ -370,7 +370,7 @@ path_t robot_path = {
     /* static cfg */
     .current_pose_idx = 0,
     .play_in_loop = FALSE,
-    .nb_pose = sizeof(poses)/sizeof(path_pose_t),
+    .nb_pose = sizeof(poses) / sizeof(path_pose_t),
     .poses = poses,
 };
 
@@ -379,7 +379,7 @@ inline const path_pose_t *path_get_current_path_pos(const path_t *path)
     return &path->poses[path->current_pose_idx];
 }
 
-inline const path_pose_t* path_get_pose_at_idx(path_t *path, uint8_t idx)
+inline const path_pose_t *path_get_pose_at_idx(path_t *path, uint8_t idx)
 {
     if ((idx < path->nb_pose) && (idx > 0))
         return &path->poses[idx];

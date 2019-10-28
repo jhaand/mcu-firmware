@@ -147,12 +147,12 @@
 
 #ifndef CC110X_PARAMS
 #define CC110X_PARAMS               { \
-                                        .spi  = CC110X_PARAM_SPI,  \
-                                        .cs   = CC110X_PARAM_CS,   \
-                                        .gdo0 = CC110X_PARAM_GDO0, \
-                                        .gdo1 = CC110X_PARAM_GDO1, \
-                                        .gdo2 = CC110X_PARAM_GDO2, \
-                                    }
+        .spi = CC110X_PARAM_SPI,  \
+        .cs = CC110X_PARAM_CS,   \
+        .gdo0 = CC110X_PARAM_GDO0, \
+        .gdo1 = CC110X_PARAM_GDO1, \
+        .gdo2 = CC110X_PARAM_GDO2, \
+}
 #endif
 
 typedef struct {
@@ -202,30 +202,30 @@ static const pf_sensor_t pf_sensors[VL53L0X_NUMOF] = {
 };
 
 static const ctrl_quadpid_parameters_t ctrl_quadpid_params = {
-        .linear_speed_pid = {
-            .kp = 150.,
-            .ki = 2,
-            .kd = 0.,
-        },
-        .angular_speed_pid = {
-            .kp = 150.,
-            .ki = 2,
-            .kd = 0.,
-        },
-        .linear_pose_pid = {
-            .kp = 1,
-            .ki = 0.,
-            .kd = 2,
-        },
-        .angular_pose_pid = {
-            .kp = 1,
-            .ki = 0.,
-            .kd = 5,
-        },
+    .linear_speed_pid = {
+        .kp = 150.,
+        .ki = 2,
+        .kd = 0.,
+    },
+    .angular_speed_pid = {
+        .kp = 150.,
+        .ki = 2,
+        .kd = 0.,
+    },
+    .linear_pose_pid = {
+        .kp = 1,
+        .ki = 0.,
+        .kd = 2,
+    },
+    .angular_pose_pid = {
+        .kp = 1,
+        .ki = 0.,
+        .kd = 5,
+    },
 
-        .min_distance_for_angular_switch = 3,   // mm,
-        .min_angle_for_pose_reached = 2,        // deg,
-        .regul = CTRL_REGUL_POSE_DIST,
+    .min_distance_for_angular_switch = 3,       // mm,
+    .min_angle_for_pose_reached = 2,            // deg,
+    .regul = CTRL_REGUL_POSE_DIST,
 };
 
 static const sd21_conf_t sd21_config[] = {
@@ -239,9 +239,9 @@ static const sd21_conf_t sd21_config[] = {
             /* Servo 0-1 */
             {
                 .positions = {
-                    750,  /* Ramp Disposal */
-                    2325, /* Puck prehension */
-                    1500, /* Neutral */
+                    750,    /* Ramp Disposal */
+                    2325,   /* Puck prehension */
+                    1500,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
                 .default_speed = 0,
@@ -250,9 +250,9 @@ static const sd21_conf_t sd21_config[] = {
             /* Servo 0-2 */
             {
                 .positions = {
-                    2500, /* Ramp Disposal */
-                    675,  /* Puck prehension */
-                    1500, /* Neutral */
+                    2500,   /* Ramp Disposal */
+                    675,    /* Puck prehension */
+                    1500,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
                 .default_speed = 0,
@@ -261,9 +261,9 @@ static const sd21_conf_t sd21_config[] = {
             /* Servo 0-3 */
             {
                 .positions = {
-                    2450, /* Ramp Disposal */
-                    575,  /* Puck prehension */
-                    1400, /* Neutral */
+                    2450,   /* Ramp Disposal */
+                    575,    /* Puck prehension */
+                    1400,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
                 .default_speed = 0,
@@ -283,7 +283,7 @@ static const sd21_conf_t sd21_config[] = {
             /* Servo 0-5 */
             {
                 .positions = {
-                     950,   /* Top position */
+                    950,    /* Top position */
                     2000,   /* Bottom position */
                     1500,   /* Default */
                 },
@@ -380,9 +380,9 @@ static const sd21_conf_t sd21_config[] = {
             /* Servo 1-1 */
             {
                 .positions = {
-                    1500, /* */
-                    1500, /* */
-                    1500, /* */
+                    1500,   /* */
+                    1500,   /* */
+                    1500,   /* */
                 },
                 .default_position = 2,
                 .default_speed = 0,
@@ -391,9 +391,9 @@ static const sd21_conf_t sd21_config[] = {
             /* Servo 1-2 */
             {
                 .positions = {
-                    1975, /* Top position */
-                    1350, /* Bottom position */
-                    1975, /* Default */
+                    1975,   /* Top position */
+                    1350,   /* Bottom position */
+                    1975,   /* Default */
                 },
                 .default_position = 2,
                 .default_speed = 0,
@@ -402,9 +402,9 @@ static const sd21_conf_t sd21_config[] = {
             /* Servo 1-3 */
             {
                 .positions = {
-                    1000, /* Open */
-                    1850, /* Close */
-                    1500, /* Default */
+                    1000,   /* Open */
+                    1850,   /* Close */
+                    1500,   /* Default */
                 },
                 .default_position = 0,
                 .default_speed = 0,
@@ -491,7 +491,7 @@ static const sd21_conf_t sd21_config[] = {
             {
                 .positions = {
                     2225,   /* Ramp disposal */
-                    825,   /* Puck prehension */
+                    825,    /* Puck prehension */
                     1575,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,
@@ -502,7 +502,7 @@ static const sd21_conf_t sd21_config[] = {
             {
                 .positions = {
                     2200,   /* Ramp disposal */
-                    725,   /* Puck prehension */
+                    725,    /* Puck prehension */
                     1500,   /* Neutral */
                 },
                 .default_position = PF_SERVO_STATE_CUP_HOLD,

@@ -32,7 +32,7 @@
  *   from hardware informations.
  * * The entire source code which could change controller mode according to
  *   external events.
- * 
+ *
  * @verbatim
     --------------------------------------------------------------------
    | Structure/Setup               | Controller | Platform | Everywhere |
@@ -68,7 +68,7 @@
  * This callback is used to prepare the call to the controller mode callback
  * ctrl_mode_cb[] according to the current mode.
  */
-typedef void (*ctrl_pre_mode_cb_t)(pose_t*, polar_t*, polar_t*);
+typedef void (*ctrl_pre_mode_cb_t)(pose_t *, polar_t *, polar_t *);
 
 /**
  * @brief   Post-controller callback. Called after the controller process
@@ -76,7 +76,7 @@ typedef void (*ctrl_pre_mode_cb_t)(pose_t*, polar_t*, polar_t*);
  * This callback is used for post treatment of the controller mode callback
  * ctrl_mode_cb[] according to the current mode.
  */
-typedef void (*ctrl_post_mode_cb_t)(pose_t*, polar_t*, polar_t*);
+typedef void (*ctrl_post_mode_cb_t)(pose_t *, polar_t *, polar_t *);
 
 /**
  *@brief    Controllers working mode
@@ -96,7 +96,7 @@ typedef enum {
 typedef struct {
     pose_t pose_order;          /**< Position order */
     pose_t pose_current;        /**< Current position */
-    polar_t* speed_order;       /**< Speed order to reach the position */
+    polar_t *speed_order;       /**< Speed order to reach the position */
     polar_t speed_current;      /**< Current speed reaching the position */
 
     uint8_t pose_reached;       /**< Boolean set when pose_order is reached */
@@ -146,7 +146,7 @@ typedef struct ctrl_t ctrl_t;
  * @return                      0 on success
  * @return                      not 0 on error
  */
-typedef int (*ctrl_mode_cb_t)(ctrl_t* ctrl, polar_t* command);
+typedef int (*ctrl_mode_cb_t)(ctrl_t *ctrl, polar_t *command);
 
 /**
  * @brief   Controller modes callbacks definitions
@@ -159,8 +159,8 @@ typedef struct {
  * @brief   Controller default definition
  */
 struct ctrl_t {
-    const ctrl_configuration_t* conf;               /**< Modes callbacks */
-    const ctrl_platform_configuration_t* pf_conf;   /**< Pre and post
+    const ctrl_configuration_t *conf;               /**< Modes callbacks */
+    const ctrl_platform_configuration_t *pf_conf;   /**< Pre and post
                                                          callbacks */
     ctrl_control_t control;                         /**< Control variables */
 };
@@ -202,7 +202,7 @@ void ctrl_set_allow_reverse(ctrl_t *ctrl, uint8_t allow);
  *
  * @return
  */
-void ctrl_set_anti_blocking_on(ctrl_t* ctrl, uint8_t value);
+void ctrl_set_anti_blocking_on(ctrl_t *ctrl, uint8_t value);
 
 /**
  * @brief Get robot blocked detection status
@@ -212,7 +212,7 @@ void ctrl_set_anti_blocking_on(ctrl_t* ctrl, uint8_t value);
  * @return                      0 if disabled
  *                              >0 if enabled
  */
-uint8_t ctrl_get_anti_blocking_on(ctrl_t* ctrl);
+uint8_t ctrl_get_anti_blocking_on(ctrl_t *ctrl);
 
 /**
  * @brief Up pose reached flag
@@ -221,7 +221,7 @@ uint8_t ctrl_get_anti_blocking_on(ctrl_t* ctrl);
  *
  * @return
  */
-void ctrl_set_pose_reached(ctrl_t* ctrl);
+void ctrl_set_pose_reached(ctrl_t *ctrl);
 
 /**
  * @brief Up pose reached flag
@@ -231,7 +231,7 @@ void ctrl_set_pose_reached(ctrl_t* ctrl);
  * @return                      0 if pose is not reached
  * @return                      >0 otherwise
  */
-uint8_t ctrl_is_pose_reached(ctrl_t* ctrl);
+uint8_t ctrl_is_pose_reached(ctrl_t *ctrl);
 
 /**
  * @brief Set pose order
@@ -241,7 +241,7 @@ uint8_t ctrl_is_pose_reached(ctrl_t* ctrl);
  *
  * @return
  */
-void ctrl_set_pose_to_reach(ctrl_t* ctrl, const pose_t* pose_order);
+void ctrl_set_pose_to_reach(ctrl_t *ctrl, const pose_t *pose_order);
 
 /**
  * @brief Get pose order
@@ -250,7 +250,7 @@ void ctrl_set_pose_to_reach(ctrl_t* ctrl, const pose_t* pose_order);
  *
  * @return                      Pose to reach
  */
-const pose_t* ctrl_get_pose_to_reach(ctrl_t *ctrl);
+const pose_t *ctrl_get_pose_to_reach(ctrl_t *ctrl);
 
 /**
  * @brief Set current pose
@@ -260,7 +260,7 @@ const pose_t* ctrl_get_pose_to_reach(ctrl_t *ctrl);
  *
  * @return
  */
-void ctrl_set_pose_current(ctrl_t* const ctrl, const pose_t* pose_current);
+void ctrl_set_pose_current(ctrl_t *const ctrl, const pose_t *pose_current);
 
 /**
  * @brief Get current pose
@@ -269,7 +269,7 @@ void ctrl_set_pose_current(ctrl_t* const ctrl, const pose_t* pose_current);
  *
  * @return                      Current pose
  */
-const pose_t* ctrl_get_pose_current(ctrl_t* ctrl);
+const pose_t *ctrl_get_pose_current(ctrl_t *ctrl);
 
 /**
  * @brief Set speed order
@@ -279,7 +279,7 @@ const pose_t* ctrl_get_pose_current(ctrl_t* ctrl);
  *
  * @return
  */
-void ctrl_set_speed_order(ctrl_t* ctrl, polar_t* speed_order);
+void ctrl_set_speed_order(ctrl_t *ctrl, polar_t *speed_order);
 
 /**
  * @brief Get speed order
@@ -288,7 +288,7 @@ void ctrl_set_speed_order(ctrl_t* ctrl, polar_t* speed_order);
  *
  * @return                      Speed order
  */
-polar_t* ctrl_get_speed_order(ctrl_t* ctrl);
+polar_t *ctrl_get_speed_order(ctrl_t *ctrl);
 
 /**
  * @brief Get current speed
@@ -297,7 +297,7 @@ polar_t* ctrl_get_speed_order(ctrl_t* ctrl);
  *
  * @return                      Current speed
  */
-const polar_t* ctrl_get_speed_current(ctrl_t* ctrl);
+const polar_t *ctrl_get_speed_current(ctrl_t *ctrl);
 
 /**
  * @brief Set current mode
@@ -316,7 +316,7 @@ void ctrl_set_mode(ctrl_t *ctrl, ctrl_mode_t new_mode);
  *
  * @return                      Current mode
  */
-ctrl_mode_t ctrl_get_mode(ctrl_t* ctrl);
+ctrl_mode_t ctrl_get_mode(ctrl_t *ctrl);
 
 /**
  * @brief Periodic task function to process a controller

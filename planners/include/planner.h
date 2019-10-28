@@ -42,7 +42,7 @@ extern path_t *path;
  *
  * @return
  */
-void pln_start(ctrl_t*);
+void pln_start(ctrl_t *);
 
 /**
  * @brief Stop the trajectory planification and the associated controller
@@ -51,7 +51,7 @@ void pln_start(ctrl_t*);
  *
  * @return
  */
-void pln_stop(ctrl_t*);
+void pln_stop(ctrl_t *);
 
 /**
  * @brief Periodic task function to process a planner

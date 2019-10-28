@@ -27,7 +27,7 @@
 #include "calibration/calib_sd21.h"
 #endif /* CALIBRATION */
 
-static pf_actions_context_t pf_actions_ctx = {0};
+static pf_actions_context_t pf_actions_ctx = { 0 };
 
 int pf_is_game_launched(void)
 {
@@ -45,6 +45,7 @@ void pf_calib_read_sensors(pca9548_t dev)
 {
     vl53l0x_t sensor = 0;
     uint8_t channel = pca9548_get_current_channel(dev);
+
     for (sensor = 0; sensor < VL53L0X_NUMOF; sensor++) {
         if (vl53l0x_channel[sensor] == channel)
             break;
@@ -65,7 +66,7 @@ int pf_read_sensors(void)
     int obstacle_found = 0;
     int res = 0;
 
-    ctrl_t* ctrl = (ctrl_t*)pf_get_quadpid_ctrl();
+    ctrl_t *ctrl = (ctrl_t *)pf_get_quadpid_ctrl();
 
     reset_dyn_polygons();
 
@@ -73,8 +74,7 @@ int pf_read_sensors(void)
         return 0;
     }
 
-    if(!pf_actions_ctx.any_pump_on)
-    {
+    if (!pf_actions_ctx.any_pump_on) {
         for (vl53l0x_t dev = 0; dev < VL53L0X_NUMOF; dev++) {
 
             uint16_t measure;
@@ -87,8 +87,8 @@ int pf_read_sensors(void)
             DEBUG("Measure sensor %u: %u\n\n", dev, measure);
 
             if ((measure > OBSTACLE_DETECTION_MINIMUM_TRESHOLD)
-                    && (measure < OBSTACLE_DETECTION_MAXIMUM_TRESHOLD)) {
-                const pf_sensor_t* sensor = &pf_sensors[dev];
+                && (measure < OBSTACLE_DETECTION_MAXIMUM_TRESHOLD)) {
+                const pf_sensor_t *sensor = &pf_sensors[dev];
                 pose_t robot_pose = *ctrl_get_pose_current(ctrl);
 
                 res = add_dyn_obstacle(dev, &robot_pose, sensor->angle_offset, sensor->distance_offset, (double)measure);
@@ -153,11 +153,11 @@ void pf_front_cup_take(void)
 
 void pf_front_cup_ramp(void)
 {
- // TODO: Monter les ascenceurs face AV + et stockage des palets
+    // TODO: Monter les ascenceurs face AV + et stockage des palets
 /* Option 1: on baisse la fourchette  et  on stocke le rouge dans la fourchette.
     Le vert et le bleu dans la rampe
     Option 2: on bloque la rampe, on stocke les 3 palets dans la rampe
-*/
+ */
     if (pf_actions_ctx.nb_puck_front_ramp != 0)
         return;
     sd21_servo_reach_position(PF_SERVO_FL_ELEVATOR, PF_SERVO_STATE_ELEVATOR_TOP);
@@ -242,7 +242,7 @@ void pf_back_cup_ramp(void)
 
 void pf_front_ramp_right_drop(void)
 {
-    if(pf_actions_ctx.nb_puck_front_ramp == 0)
+    if (pf_actions_ctx.nb_puck_front_ramp == 0)
         return;
 
     uint8_t is_camp_left = pf_is_camp_left();
@@ -251,12 +251,12 @@ void pf_front_ramp_right_drop(void)
     if (is_camp_left) {
         sd21_servo_reach_position(PF_SERVO_F_RAMP, PF_SERVO_STATE_RAMP_LEFT);
         sd21_servo_reach_position(PF_SERVO_FL_RAMP_DISP,
-                PF_SERVO_STATE_RAMP_OPEN);
+                                  PF_SERVO_STATE_RAMP_OPEN);
     }
     else {
         sd21_servo_reach_position(PF_SERVO_F_RAMP, PF_SERVO_STATE_RAMP_RIGHT);
         sd21_servo_reach_position(PF_SERVO_FR_RAMP_DISP,
-                PF_SERVO_STATE_RAMP_OPEN);
+                                  PF_SERVO_STATE_RAMP_OPEN);
     }
     pf_actions_ctx.nb_puck_front_ramp = 0;
     xtimer_usleep(1500 * US_PER_MS);
@@ -276,7 +276,7 @@ void pf_front_ramp_reset(void)
 
 void pf_back_ramp_left_drop(void)
 {
-    if(pf_actions_ctx.nb_puck_back_ramp == 0)
+    if (pf_actions_ctx.nb_puck_back_ramp == 0)
         return;
     uint8_t is_camp_left = pf_is_camp_left();
 
@@ -284,14 +284,14 @@ void pf_back_ramp_left_drop(void)
     if (is_camp_left) {
         sd21_servo_reach_position(PF_SERVO_B_RAMP, PF_SERVO_STATE_RAMP_RIGHT);
         sd21_servo_reach_position(PF_SERVO_BR_RAMP_DISP, PF_SERVO_STATE_RAMP_OPEN);
-        if(pf_actions_ctx.nb_puck_front_ramp == 3) {
+        if (pf_actions_ctx.nb_puck_front_ramp == 3) {
             pf_front_ramp_right_drop();
         }
     }
     else {
         sd21_servo_reach_position(PF_SERVO_B_RAMP, PF_SERVO_STATE_RAMP_LEFT);
         sd21_servo_reach_position(PF_SERVO_BL_RAMP_DISP, PF_SERVO_STATE_RAMP_OPEN);
-        if(pf_actions_ctx.nb_puck_front_ramp == 3) {
+        if (pf_actions_ctx.nb_puck_front_ramp == 3) {
             pf_front_ramp_right_drop();
         }
     }
@@ -326,10 +326,10 @@ void pf_back_ramp_left_horiz_for_goldenium(void)
 
 void pf_arms_open(void)
 {
-    if(pf_actions_ctx.any_pump_on)
+    if (pf_actions_ctx.any_pump_on)
         pf_stop_pumps();
 
-    if(pf_actions_ctx.front_arms_opened == 1)
+    if (pf_actions_ctx.front_arms_opened == 1)
         return;
     sd21_servo_reach_position(PF_SERVO_FL_ARM, PF_SERVO_STATE_ARM_OPEN);
     sd21_servo_reach_position(PF_SERVO_FR_ARM, PF_SERVO_STATE_ARM_OPEN);
@@ -340,10 +340,10 @@ void pf_arms_open(void)
 
 void pf_arms_close(void)
 {
-    if(pf_actions_ctx.any_pump_on)
+    if (pf_actions_ctx.any_pump_on)
         pf_stop_pumps();
 
-    if(pf_actions_ctx.front_arms_opened == 0)
+    if (pf_actions_ctx.front_arms_opened == 0)
         return;
     sd21_servo_reach_position(PF_SERVO_FL_ARM, PF_SERVO_STATE_ARM_CLOSE);
     sd21_servo_reach_position(PF_SERVO_FR_ARM, PF_SERVO_STATE_ARM_CLOSE);
@@ -356,8 +356,7 @@ void pf_goldenium_take(void)
 {
     uint8_t is_camp_left = pf_is_camp_left();
 
-    if(!is_camp_left)
-    {
+    if (!is_camp_left) {
         // Front Right cup do the job
         sd21_servo_reach_position(PF_SERVO_FR_CUP, PF_SERVO_STATE_CUP_TAKE);
         sd21_servo_reach_position(PF_SERVO_FR_ELEVATOR, PF_SERVO_STATE_ELEVATOR_GOLDEN);
@@ -365,8 +364,7 @@ void pf_goldenium_take(void)
         gpio_set(GPIO_FL_PUMP_4);
         xtimer_usleep(10 * US_PER_MS);
     }
-    else
-    {
+    else {
         // Front Left cup do the job
         sd21_servo_reach_position(PF_SERVO_FL_CUP, PF_SERVO_STATE_CUP_TAKE);
         sd21_servo_reach_position(PF_SERVO_FL_ELEVATOR, PF_SERVO_STATE_ELEVATOR_GOLDEN);
@@ -380,8 +378,7 @@ void pf_goldenium_hold(void)
 {
     uint8_t is_camp_left = pf_is_camp_left();
 
-    if(!is_camp_left)
-    {
+    if (!is_camp_left) {
         // Front Right cup do the job
         sd21_servo_reach_position(PF_SERVO_FR_CUP, PF_SERVO_STATE_CUP_HOLD); //TODO: besoin de descendre ascenseur ?
         xtimer_usleep(500 * US_PER_MS);
@@ -390,8 +387,7 @@ void pf_goldenium_hold(void)
         gpio_clear(GPIO_FL_PUMP_4);
         pf_actions_ctx.any_pump_on = 0;
     }
-    else
-    {
+    else {
         // Front Left cup do the job
         sd21_servo_reach_position(PF_SERVO_FL_CUP, PF_SERVO_STATE_CUP_HOLD); //TODO: besoin de descendre ascenseur ?
         xtimer_usleep(500 * US_PER_MS);
@@ -406,8 +402,7 @@ void pf_goldenium_drop(void)
 {
     uint8_t is_camp_left = pf_is_camp_left();
 
-    if(!is_camp_left)
-    {
+    if (!is_camp_left) {
         // Front Right cup do the job
         pf_actions_ctx.any_pump_on = 1;
         gpio_set(GPIO_FL_PUMP_4);
@@ -419,8 +414,7 @@ void pf_goldenium_drop(void)
         gpio_clear(GPIO_FL_PUMP_4);
         pf_actions_ctx.any_pump_on = 0;
     }
-    else
-    {
+    else {
         // Front Left cup do the job
         pf_actions_ctx.any_pump_on = 1;
         gpio_set(GPIO_FR_PUMP_6);
