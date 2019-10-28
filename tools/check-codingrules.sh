@@ -81,6 +81,8 @@ else
         else
             echo "meld binary not found, install it with : apt install meld"
         fi
+
+        rm -R "$UNCRUSTIFY_OUTPUT_DIR"
     fi
 fi
 
